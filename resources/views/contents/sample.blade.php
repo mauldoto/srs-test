@@ -46,7 +46,7 @@
       <div class="row d-flex justify-content-center align-items-center">
           <div class="col-12">
 
-            @if (($dataSample))
+            @if (count($dataSample)>0)
             <div class="card shadow-2-strong" style="border-radius: 1rem;">
               <div class="card-body p-5 shadow" style="border-radius: 1rem;">
 

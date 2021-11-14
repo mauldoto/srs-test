@@ -34,10 +34,8 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable(function (Throwable $e) {
-            if ($e->getStatusCode() === 419) {
-                return redirect('/login');
-            }
+        $this->reportable(function (Throwable $e) {
+
         });
     }
 }

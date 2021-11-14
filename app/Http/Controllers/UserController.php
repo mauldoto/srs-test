@@ -33,7 +33,7 @@ class UserController extends Controller
 
     function mainView(Request $request)
     {
-        $data = $request->session()->has('data') ? $request->session()->get('data') : false;
+        $data = $request->session()->has('data') ? $request->session()->get('data') : [];
 
         return view('contents.sample', [
             'dataSample' => $data,
@@ -44,19 +44,22 @@ class UserController extends Controller
     function getSampledata(DataRequest $request)
     {
         $sampleId = $request->sample_id;
-
-        $response = Http::get('https://slab.srs-ssms.com/api/admin/gethasilanalisas/' . $sampleId);
         $data = [];
-        $data['data_sample_id'] = $response['data_sampels_id'];
-        $data['tahun'] = $response['tahun'];
-        $data['simbol'] = $response['simbol'];
-        $data['parameters_id_s'] = $response['parameters_id_s'];
-        $data['kode_contoh'] = $response['kode_contoh'];
-        $data['batch'] = $response['batch'];
-        $data['hasil'] = $response['hasil'];
-        $data['no_lab'] = $response['no_lab'];
+        $response = Http::get('https://slab.srs-ssms.com/api/admin/gethasilanalisas/' . $sampleId);
+        if ($response['success']) {
+            $data['data_sample_id'] = $response['data_sampels_id'];
+            $data['tahun'] = $response['tahun'];
+            $data['simbol'] = $response['simbol'];
+            $data['parameters_id_s'] = $response['parameters_id_s'];
+            $data['kode_contoh'] = $response['kode_contoh'];
+            $data['batch'] = $response['batch'];
+            $data['hasil'] = $response['hasil'];
+            $data['no_lab'] = $response['no_lab'];
 
-        return redirect('/data-sample')->with(['data' => $data]);
+            return redirect('/data-sample')->with(['data' => $data]);
+        }
+
+        return back()->withErrors('Data tidak ditemukan');        
     }
 
     function logout(Request $request)
