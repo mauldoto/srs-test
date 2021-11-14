@@ -4,7 +4,7 @@
 <section>
   <div class="container py-1">
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-12">
+        <div class="col-5">
           @if ($errors->any())
           <div class="alert alert-danger d-flex align-items-center" role="alert">
               <div>
